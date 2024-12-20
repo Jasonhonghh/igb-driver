@@ -105,7 +105,7 @@ fn ral(i: u32) -> u32 {
     if i <= 15 {
         0x05400 + i * 8
     } else {
-        0x0A200 + i * 8
+        0x054E0 + i * 8
     }
 }
 
@@ -113,7 +113,7 @@ fn rah(i: u32) -> u32 {
     if i <= 15 {
         0x05404 + i * 8
     } else {
-        0x0A204 + i * 8
+        0x054E4 + i * 8
     }
 }
 
@@ -268,3 +268,128 @@ bitflags! {
 impl FlagReg for SwFwSync {
     const REG: u32 = 0x05B5C;
 }
+
+bitflags! {
+    pub struct RDBAL0: u32 {
+        const ADDR = 0xFFFF_FFFF;
+    }
+}
+
+impl FlagReg for RDBAL0 {
+    const REG: u32 = 0x0C000;
+}
+
+bitflags! {
+    pub struct RDBAH0: u32 {
+        const ADDR = 0xFFFF_FFFF;
+    }
+}
+
+impl FlagReg for RDBAH0 {
+    const REG: u32 = 0x0C004;
+}
+
+bitflags! {
+    pub struct RDLEN0: u32 {
+        const LEN = 0xFFFF;
+    }
+}
+
+impl FlagReg for RDLEN0 {
+    const REG: u32 = 0x0C008;
+}
+
+bitflags! {
+    pub struct RDH0: u32 {
+        const HEAD = 0xFFFF;
+    }
+}
+
+impl FlagReg for RDH0 {
+    const REG: u32 = 0x0C010;
+}
+
+bitflags! {
+     pub struct RDT0: u32 {
+        const TAIL = 0xFFFF;
+    }
+}
+
+impl FlagReg for RDT0 {
+    const REG: u32 = 0x0C018;
+}
+
+bitflags! {
+    pub struct SRRCTL0:u32{
+        const BSIZEPACKET = 64;
+        const DESCTYPE = 1<<25;
+    }
+}
+impl FlagReg for SRRCTL0 {
+    const REG: u32 = 0x0C00C;
+}
+
+bitflags! {
+    pub struct RXDCTL0:u32{
+        const EN = 1<<25;
+        const WTHRESH = 1<<16;
+    }
+}
+
+impl FlagReg for RXDCTL0 {
+    const REG: u32 = 0x0C028;
+}
+bitflags! {
+    pub struct TDBAL0:u32{
+        const ADDR = 0xFFFF_FFFF;
+    }
+}
+impl FlagReg for TDBAL0 {
+    const REG: u32 = 0xE000;
+}
+bitflags! {
+    pub struct TDBAH0:u32{
+        const ADDR = 0xFFFF_FFFF;
+    }
+}
+impl FlagReg for TDBAH0 {
+    const REG: u32 = 0xE004;
+}
+
+bitflags! {
+    pub struct TDLEN0:u32{
+        const LEN = 0xFFFF;
+    }
+}
+impl FlagReg for TDLEN0 {
+    const REG: u32 = 0xE008;
+}
+
+bitflags! {
+    pub struct TDH0:u32{
+        const HEAD = 0xFFFF;
+    }
+}
+impl FlagReg for TDH0 {
+    const REG: u32 = 0xE010;
+}
+bitflags! {
+    pub struct TDT0:u32{
+        const HEAD = 0xFFFF;
+    }
+}
+impl FlagReg for TDT0 {
+    const REG: u32 = 0xE018;
+}
+
+bitflags! {
+    pub struct TXDCTL0:u32{
+        const WTHRESH = 1<<16;
+        const EN = 1<<25;
+    }
+}
+impl FlagReg for TXDCTL0 {
+    const REG: u32 = 0x0C028;
+}
+
+

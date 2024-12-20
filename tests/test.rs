@@ -48,6 +48,9 @@ impl igb_driver::Kernel for KernelImpl {
     fn sleep(duration: Duration) {
         sleep(duration);
     }
+    fn phy_to_vir(addr: u64) -> u64 {
+        5 as u64
+    }
 }
 
 igb_driver::set_impl!(KernelImpl);

@@ -4,9 +4,12 @@ use crate::{
     err::IgbError,
     regs::{Reg, SwFwSync, MDIC, SWSM},
 };
+use crate::regs::CTRL;
 
 const PHY_CONTROL: u32 = 0;
 const MII_CR_POWER_DOWN: u16 = 0x0800;
+const RESTART_AUTONEG: u16 = 1<<9;
+const AUTONEG_ENABLE: u16 = 1<<12;
 
 pub struct Phy {
     reg: Reg,
@@ -31,7 +34,6 @@ impl Phy {
                 break;
             }
             if mdic.contains(MDIC::E) {
-                error!("MDIC read error");
                 return Err(IgbError::Unknown);
             }
         }
@@ -63,8 +65,11 @@ impl Phy {
     }
 
     pub fn power_up(&self) -> Result<(), IgbError> {
+        self.reg.write_reg::<CTRL>(self.reg.read_reg::<CTRL>() | CTRL::SLU);//set ctrl.slu
         let mut mii_reg = self.read_mdic(PHY_CONTROL)?;
         mii_reg &= !MII_CR_POWER_DOWN;
+        mii_reg |= RESTART_AUTONEG;
+        mii_reg |= AUTONEG_ENABLE;
         self.write_mdic(PHY_CONTROL, mii_reg)
     }
 }
